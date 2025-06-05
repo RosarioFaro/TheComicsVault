@@ -8,13 +8,23 @@ function Footer() {
         </a>{" "}
         / Icons by{" "}
         <a
-          href="https://www.flaticon.com/free-icons/ebay"
+          href="https://www.flaticon.com/authors/roundicons-premium"
           title="ebay icons"
           target="_blank"
           rel="noreferrer"
           className="text-info"
         >
-          Freepik - Flaticon
+          Roundicons - Flaticon
+        </a>{" "}
+        / Superhero icons created by{" "}
+        <a
+          href="https://www.flaticon.com/authors/darius-dan"
+          title="superhero icons"
+          target="_blank"
+          rel="noreferrer"
+          className="text-info"
+        >
+          Darius Dan - Flaticon
         </a>
         .
       </small>
