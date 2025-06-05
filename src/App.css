@@ -1,0 +1,171 @@
+/* Sfondo pagina */
+body {
+  background-color: #212529;
+  background-image: url("assets/sfondo.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: #fff;
+}
+
+/* PublisherPage */
+
+.publisher-media-grid {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.publisher-img {
+  max-width: 300px;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.publisher-description {
+  min-width: 0;
+  word-break: break-word;
+}
+
+@media (max-width: 768px) {
+  .publisher-media-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Colore testo base solo per i principali tag */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+label,
+.main-content,
+.volume-detail-bg,
+.custom-pagination {
+  color: #fff;
+}
+
+/* Stile Anchor */
+
+.publisher-description a,
+.volume-description a {
+  color: #ffc107;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s, background 0.2s;
+  background: none;
+  border-radius: 3px;
+  padding: 1px 4px;
+}
+
+.publisher-description a:hover,
+.volume-description a:hover,
+.publisher-description a:focus,
+.volume-description a:focus {
+  color: #181818;
+  background: #ffc107;
+  text-decoration: none;
+  outline: none;
+}
+
+.publisher-description a[href^="/publisher/"],
+.volume-detail-bg a[href^="/publisher/"] {
+  color: #198738;
+  background: none;
+  font-weight: 500;
+  border-radius: 3px;
+  padding: 1px 4px;
+  text-decoration: none;
+  transition: color 0.2s, background 0.2s;
+}
+
+.publisher-description a[href^="/publisher/"]:hover,
+.volume-detail-bg a[href^="/publisher/"]:hover,
+.publisher-description a[href^="/publisher/"]:focus,
+.volume-detail-bg a[href^="/publisher/"]:focus {
+  color: #b8dac2;
+  background: #198738;
+  outline: none;
+}
+
+/* Pointer custom */
+.pointer {
+  cursor: pointer;
+}
+.pointer:hover {
+  background-color: #ffffff24;
+}
+
+/* Layout */
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Box trasparente per i dettagli volume */
+.volume-detail-bg {
+  background-color: rgba(24, 24, 24, 0.95);
+  border-radius: 20px;
+  box-shadow: 0 4px 32px #0009;
+  padding: 2.5rem;
+  color: #fff;
+}
+
+/* Bottoni Amazon/eBay */
+.btn-market {
+  background: #fff !important;
+  color: #222 !important;
+  border: 2px solid #e0e0e0 !important;
+  box-shadow: 0 2px 12px #0001;
+  font-weight: 500;
+  transition: box-shadow 0.18s, border-color 0.18s, color 0.2s;
+}
+
+.btn-market span {
+  color: #222 !important;
+}
+
+.btn-market img {
+  filter: none;
+  opacity: 1;
+}
+
+.btn-amazon:hover {
+  border-color: #ff9900 !important;
+  box-shadow: 0 0 0 3px #ffedcc;
+}
+
+.btn-ebay:hover {
+  border-color: #00b300 !important;
+  box-shadow: 0 0 0 3px #ccffd7;
+}
+
+/* Paginazione */
+.custom-pagination .page-link {
+  background-color: #181818;
+  color: #fff;
+  border: none;
+}
+.custom-pagination .page-item.active .page-link {
+  background-color: #333;
+  color: #ffc107;
+  border: none;
+}
+.custom-pagination .page-link:hover {
+  background-color: #232323;
+  color: #ffc107;
+}
