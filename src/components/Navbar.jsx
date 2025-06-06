@@ -47,19 +47,23 @@ function Navbar() {
               {username && username !== "undefined" && username !== "" && (
                 <li className="nav-item d-flex align-items-center">
                   {avatar && (
-                    <img
-                      src={avatar}
-                      alt={username}
-                      style={{
-                        width: 36,
-                        height: 36,
-                        borderRadius: "50%",
-                        objectFit: "cover",
-                        marginRight: 8,
-                        border: "2px solid #343a40",
-                        background: "#fff",
-                      }}
-                    />
+                    <Link to="/profile" style={{ display: "inline-block" }}>
+                      <img
+                        src={avatar}
+                        alt={username}
+                        style={{
+                          width: 36,
+                          height: 36,
+                          borderRadius: "50%",
+                          objectFit: "cover",
+                          marginRight: 8,
+                          border: "2px solid #343a40",
+                          background: "#fff",
+                          cursor: "pointer",
+                          transition: "box-shadow 0.2s",
+                        }}
+                      />
+                    </Link>
                   )}
                   <span className="nav-link text-black disabled">{username}!</span>
                 </li>

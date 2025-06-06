@@ -8,6 +8,7 @@ import PublisherPage from "./components/PublisherPage";
 import UserLibraryPage from "./components/UserLibraryPage";
 import AuthPage from "./components/AuthPage";
 import ScrollToTopButton from "./components/ScrollToTopButton";
+import ProfileEditPage from "./components/ProfileEditPage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/volumes/:id" element={<VolumeDetailPage />} />
             <Route path="/publisher/:id" element={<PublisherPage />} />
             <Route path="/library" element={<UserLibraryPage />} />
+            <Route path="/profile" element={<ProfileEditPage />} />
           </Routes>
         </div>
         <Footer />
