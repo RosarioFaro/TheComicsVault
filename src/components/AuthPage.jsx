@@ -85,7 +85,7 @@ function AuthPage() {
   };
 
   return (
-    <Container className="h-100 mt-5">
+    <Container className="h-100 mt-5 volume-detail-bg">
       <div className="d-flex justify-content-center mb-4">
         <Button
           variant={mode === "login" ? "primary" : "outline-primary"}
@@ -112,7 +112,7 @@ function AuthPage() {
               placeholder="Username"
               value={loginForm.username}
               onChange={(e) => setLoginForm({ ...loginForm, username: e.target.value })}
-              className="bg-black border-0"
+              // rimosso className
             />
           </Form.Group>
 
@@ -124,7 +124,7 @@ function AuthPage() {
               placeholder="Password"
               value={loginForm.password}
               onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
-              className="bg-black border-0"
+              // rimosso className
             />
           </Form.Group>
 
@@ -147,7 +147,7 @@ function AuthPage() {
               placeholder="Username"
               value={registerForm.username}
               onChange={(e) => setRegisterForm({ ...registerForm, username: e.target.value })}
-              className="bg-black border-0"
+              // rimosso className
             />
           </Form.Group>
 
@@ -159,7 +159,7 @@ function AuthPage() {
               placeholder="Password"
               value={registerForm.password}
               onChange={(e) => setRegisterForm({ ...registerForm, password: e.target.value })}
-              className="bg-black border-0"
+              // rimosso className
             />
           </Form.Group>
 
@@ -176,7 +176,7 @@ function AuthPage() {
                   confirmPassword: e.target.value,
                 })
               }
-              className="bg-black border-0"
+              // rimosso className
             />
           </Form.Group>
 

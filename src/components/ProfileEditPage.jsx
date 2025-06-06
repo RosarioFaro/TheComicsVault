@@ -111,7 +111,7 @@ function ProfileEditPage() {
   if (loading) return <div className="text-center mt-5">Loading...</div>;
 
   return (
-    <Container className="my-5" style={{ maxWidth: 500 }}>
+    <Container className="my-5 volume-detail-bg" style={{ maxWidth: 500 }}>
       <h2 className="mb-4 text-center">Edit Profile</h2>
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3">
