@@ -59,7 +59,14 @@ function UserLibraryPage() {
   };
 
   const handleFormChange = (e) => {
-    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+    if (name === "currentIssue") {
+      let max = editEntry?.issueCount || 1;
+      let val = value === "" ? "" : Math.max(1, Math.min(Number(value), max));
+      setForm((f) => ({ ...f, currentIssue: val }));
+    } else {
+      setForm((f) => ({ ...f, [name]: value }));
+    }
   };
 
   const getStatusStyle = (status) => {
@@ -115,7 +122,7 @@ function UserLibraryPage() {
   if (error) return <p style={{ color: "red" }}>Error: {error}</p>;
 
   return (
-    <div style={{ maxWidth: 800, margin: "0 auto" }} className="volume-detail-bg mt-4">
+    <div style={{ maxWidth: 800, margin: "0 auto" }} className="volume-detail-bg mt-4 fixed-width-table">
       <h2>Your Vault</h2>
       <div className="mb-3 d-flex gap-2 flex-wrap">
         <Button variant={statusFilter === "" ? "outline-light" : "light"} size="sm" onClick={() => setStatusFilter("")}>
@@ -150,7 +157,14 @@ function UserLibraryPage() {
           Dropped
         </Button>
       </div>
-      <table border="1" cellPadding="8" style={{ width: "100%" }}>
+      <table
+        border="1"
+        cellPadding="10"
+        style={{
+          width: "100%",
+          tableLayout: "auto",
+        }}
+      >
         <thead>
           <tr>
             <th>Title</th>
@@ -226,15 +240,26 @@ function UserLibraryPage() {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label className="text-white">Issue</Form.Label>
+              <Form.Label className="text-white">
+                Issue <span style={{ color: "#ccc", fontSize: 13 }}>(max {editEntry?.issueCount || 1})</span>
+              </Form.Label>
               <Form.Control
                 type="number"
                 name="currentIssue"
                 className="bg-dark text-white border-secondary"
                 value={form.currentIssue}
                 min="1"
-                onChange={handleFormChange}
-                placeholder="(opzionale)"
+                max={editEntry?.issueCount || 1}
+                onChange={(e) => {
+                  let max = editEntry?.issueCount || 1;
+                  let val = e.target.value === "" ? "" : Math.max(1, Math.min(Number(e.target.value), max));
+                  setForm((f) => ({
+                    ...f,
+                    currentIssue: val,
+                    status: val === max ? "COMPLETED" : f.status === "COMPLETED" ? "READING" : f.status,
+                  }));
+                }}
+                placeholder={`(max ${editEntry?.issueCount || 1})`}
               />
             </Form.Group>
           </Modal.Body>
@@ -243,7 +268,7 @@ function UserLibraryPage() {
               Return
             </Button>
             <Button variant="primary" type="submit" disabled={saving}>
-              {saving ? <Spinner size="sm" animation="border" /> : "Salva"}
+              {saving ? <Spinner size="sm" animation="border" /> : "Save"}
             </Button>
           </Modal.Footer>
         </Form>

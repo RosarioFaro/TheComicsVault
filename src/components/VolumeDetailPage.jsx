@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { Modal, Button, Form, Spinner } from "react-bootstrap";
+import { Modal, Button, Form, Spinner, Placeholder } from "react-bootstrap";
 import safeDescription from "../utils/safeDescription.jsx";
 import amazonImg from "../assets/amazon.png";
 import ebayImg from "../assets/ebay.png";
@@ -149,7 +149,82 @@ function VolumeDetailPage() {
     }
   };
 
-  if (loading) return <p className="text-center mt-5">Loading volume...</p>;
+  if (loading) {
+    return (
+      <div className="container mt-5 volume-detail-bg">
+        <div className="row align-items-start my-5">
+          <div className="col-md-4 d-flex flex-column align-items-center">
+            <Placeholder
+              as="div"
+              animation="wave"
+              style={{
+                width: 220,
+                height: 330,
+                borderRadius: 12,
+                marginBottom: 18,
+                background: "#B6B6B6",
+              }}
+            />
+            <Placeholder
+              animation="wave"
+              style={{ width: 140, height: 22, marginBottom: 10, borderRadius: 6, background: "#B6B6B6" }}
+            />
+            <Placeholder
+              animation="wave"
+              style={{ width: 90, height: 18, marginBottom: 18, borderRadius: 5, background: "#B6B6B6" }}
+            />
+            <div className="d-flex gap-2 mb-3 w-100" style={{ maxWidth: 300 }}>
+              <Placeholder.Button
+                animation="wave"
+                style={{ width: 120, height: 38, borderRadius: 20, background: "#B6B6B6" }}
+              />
+              <Placeholder.Button
+                animation="wave"
+                style={{ width: 120, height: 38, borderRadius: 20, background: "#B6B6B6" }}
+              />
+            </div>
+          </div>
+          <div className="col-md-8">
+            <Placeholder
+              as="h2"
+              animation="wave"
+              style={{ width: 300, height: 44, marginBottom: 32, borderRadius: 10, background: "#B6B6B6" }}
+            />
+            <div>
+              <div>
+                <Placeholder
+                  animation="wave"
+                  xs={9}
+                  style={{ height: 16, marginBottom: 7, borderRadius: 4, background: "#B6B6B6" }}
+                />
+                <Placeholder
+                  animation="wave"
+                  xs={11}
+                  style={{ height: 16, marginBottom: 7, marginTop: 45, borderRadius: 4, background: "#B6B6B6" }}
+                />
+                <Placeholder
+                  animation="wave"
+                  xs={7}
+                  style={{ height: 16, marginBottom: 7, borderRadius: 4, background: "#B6B6B6" }}
+                />
+                <Placeholder
+                  animation="wave"
+                  xs={12}
+                  style={{ height: 16, marginBottom: 7, borderRadius: 4, background: "#B6B6B6" }}
+                />
+                <Placeholder
+                  animation="wave"
+                  xs={10}
+                  style={{ height: 16, marginBottom: 7, borderRadius: 4, background: "#B6B6B6" }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (notFound || !volume) return <p className="text-center mt-5">Volume not found.</p>;
 
   const amazonUrl = `https://www.amazon.it/s?k=${encodeURIComponent(volume.name + " " + (volume.publisher || ""))}`;
@@ -161,7 +236,7 @@ function VolumeDetailPage() {
     <div className="container mt-5 volume-detail-bg">
       <h2 className="mx-5">{volume.name}</h2>
       <div className="row align-items-start my-5">
-        <div className="col-md-4 d-flex flex-column align-items-center">
+        <div className="col-lg-4 d-flex flex-column align-items-center">
           <img src={volume.imageUrl} alt={volume.name} className="img-fluid mb-3" style={{ maxWidth: "300px" }} />
           <div className="w-100 mb-2" style={{ maxWidth: 300, textAlign: "left" }}>
             <p className="mb-1">
@@ -215,7 +290,7 @@ function VolumeDetailPage() {
           </div>
         </div>
 
-        <div className="col-md-8 d-flex flex-column justify-content-start">
+        <div className="col-lg-8 d-flex flex-column justify-content-start">
           <div className="volume-description" style={{ minHeight: "1px" }}>
             {safeDescription(volume.description)}
           </div>
@@ -267,17 +342,18 @@ function VolumeDetailPage() {
                 className="bg-dark text-white border-secondary"
                 value={form.issue}
                 min={0}
-                max={volume.issueCount}
+                max={volume.issueCount || 1}
                 onChange={(e) => {
-                  let val = e.target.value;
-                  if (val === "") {
-                    setForm((f) => ({ ...f, issue: "" }));
-                  } else {
-                    let num = Math.max(0, Math.min(Number(val), volume.issueCount));
-                    setForm((f) => ({ ...f, issue: num }));
-                  }
+                  const max = volume.issueCount || 1;
+                  let val = e.target.value === "" ? "" : Math.max(0, Math.min(Number(e.target.value), max));
+                  setForm((f) => ({
+                    ...f,
+                    issue: val,
+                    status:
+                      val !== "" && Number(val) === max ? "COMPLETED" : f.status === "COMPLETED" ? "READING" : f.status,
+                  }));
                 }}
-                placeholder={`(max ${volume.issueCount})`}
+                placeholder={`(max ${volume.issueCount || 1})`}
               />
               <Form.Text className="text-secondary">Max: {volume.issueCount}</Form.Text>
             </Form.Group>
