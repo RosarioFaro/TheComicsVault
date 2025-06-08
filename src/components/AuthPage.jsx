@@ -86,6 +86,10 @@ function AuthPage() {
 
   return (
     <Container className="h-100 mt-5 volume-detail-bg">
+      <div className="text-center mb-4">
+        <h3>Welcome to TheComicVault!</h3>
+        <p>Login to your account or register to start building your comic library.</p>
+      </div>
       <div className="d-flex justify-content-center mb-4">
         <Button
           variant={mode === "login" ? "primary" : "outline-primary"}

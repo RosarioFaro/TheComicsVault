@@ -35,6 +35,7 @@ function ProfileEditPage() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [showAvatarModal, setShowAvatarModal] = useState(false);
+  const [showRedirectModal, setShowRedirectModal] = useState(false); // NEW
 
   useEffect(() => {
     const username = localStorage.getItem("username");
@@ -89,6 +90,8 @@ function ProfileEditPage() {
         localStorage.setItem("username", form.username);
         localStorage.setItem("avatar", form.avatar);
         dispatch({ type: LOGIN, payload: { token, username: form.username, avatar: form.avatar } });
+
+        setShowRedirectModal(true); // Mostra modale "Redirecting..."
 
         setTimeout(() => {
           localStorage.removeItem("token");
@@ -166,6 +169,7 @@ function ProfileEditPage() {
         </Button>
       </Form>
 
+      {/* Avatar selection modal */}
       <Modal show={showAvatarModal} onHide={() => setShowAvatarModal(false)} centered size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Choose your avatar</Modal.Title>
@@ -191,6 +195,13 @@ function ProfileEditPage() {
               />
             ))}
           </div>
+        </Modal.Body>
+      </Modal>
+
+      <Modal show={showRedirectModal} centered backdrop="static" keyboard={false}>
+        <Modal.Body className="text-center py-4 text-black">
+          <h4>Username changed</h4>
+          <p className="text-black">Redirecting to login...</p>
         </Modal.Body>
       </Modal>
     </Container>
