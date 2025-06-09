@@ -9,6 +9,7 @@ import UserLibraryPage from "./components/UserLibraryPage";
 import AuthPage from "./components/AuthPage";
 import ScrollToTopButton from "./components/ScrollToTopButton";
 import ProfileEditPage from "./components/ProfileEditPage";
+import HomePage from "./components/HomePage";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <div className="main-content">
           <Routes>
             <Route path="/" element={<AuthPage />} />
+            <Route path="/homepage" element={<HomePage />} />
             <Route path="/volumes" element={<VolumesPage />} />
             <Route path="/volumes/:id" element={<VolumeDetailPage />} />
             <Route path="/publisher/:id" element={<PublisherPage />} />

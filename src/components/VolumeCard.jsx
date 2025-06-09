@@ -1,26 +1,8 @@
-import { useState } from "react";
 import { Card } from "react-bootstrap";
 
 function VolumeCard({ volume }) {
-  const [hovered, setHovered] = useState(false);
-
   return (
-    <Card
-      className="h-100 border-2 shadow-sm transition-card"
-      style={{
-        transform: hovered ? "scale(1.03)" : "scale(1)",
-        border: hovered ? "3px solid #FFC107" : "3px solid transparent",
-        boxShadow: hovered ? "0 0 24px 2px #f8e82555" : "0 1px 6px 0 #0000001a",
-        color: "#fff",
-        background: "#181818",
-        transition:
-          "transform 0.25s cubic-bezier(.4,2,.6,1), border 0.2s, box-shadow 0.2s, color 0.2s, background 0.25s",
-        position: "relative",
-        overflow: "hidden",
-      }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
+    <Card className="h-100 bg-dark text-white card-hover-effect">
       {volume.imageUrl && (
         <Card.Img
           variant="top"
@@ -29,8 +11,9 @@ function VolumeCard({ volume }) {
           style={{ borderRadius: "6px 6px 0 0", background: "#fff" }}
         />
       )}
+
       <Card.Body
-        className="bg-dark d-flex flex-column justify-content-between"
+        className="d-flex flex-column justify-content-between"
         style={{
           background: "transparent",
           borderRadius: "6px",
@@ -47,6 +30,7 @@ function VolumeCard({ volume }) {
             <strong>Issues:</strong> {volume.issueCount}
           </Card.Text>
         </div>
+
         <div
           style={{
             position: "absolute",

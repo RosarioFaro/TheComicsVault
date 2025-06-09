@@ -5,6 +5,7 @@ import { Modal, Button, Form, Spinner, Placeholder } from "react-bootstrap";
 import safeDescription from "../utils/safeDescription.jsx";
 import amazonImg from "../assets/amazon.png";
 import ebayImg from "../assets/ebay.png";
+import vaultChest from "../assets/treasure.png";
 import CommentsSection from "./CommentsSection.jsx";
 
 function VolumeDetailPage() {
@@ -25,6 +26,9 @@ function VolumeDetailPage() {
     score: "",
     issue: "",
   });
+
+  // Nuovo stato per la modale di conferma
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   useEffect(() => {
     if (!id || id === "null" || isNaN(Number(id))) {
@@ -131,7 +135,13 @@ function VolumeDetailPage() {
     }
   };
 
-  const handleRemove = async () => {
+  // Solo apre la modale di conferma, NON cancella direttamente
+  const handleRemove = () => {
+    setShowDeleteModal(true);
+  };
+
+  // Solo dopo la conferma si elimina davvero
+  const confirmDelete = async () => {
     setActionLoading(true);
     setActionError(null);
     const token = localStorage.getItem("token");
@@ -142,16 +152,18 @@ function VolumeDetailPage() {
       setActionLoading(false);
       setLibraryRefresh((r) => r + 1);
       setShowModal(false);
+      setShowDeleteModal(false);
     } catch (e) {
       console.log(e);
       setActionError("Error while removing from library.");
       setActionLoading(false);
+      setShowDeleteModal(false);
     }
   };
 
   if (loading) {
     return (
-      <div className="container mt-5 volume-detail-bg">
+      <div className="container mt-5 volume-detail-bg custom-container">
         <div className="row align-items-start my-5">
           <div className="col-md-4 d-flex flex-column align-items-center">
             <Placeholder
@@ -233,7 +245,7 @@ function VolumeDetailPage() {
   )}`;
 
   return (
-    <div className="container mt-5 volume-detail-bg">
+    <div className="container mt-5 volume-detail-bg custom-container">
       <h2 className="mx-5">{volume.name}</h2>
       <div className="row align-items-start my-5">
         <div className="col-lg-4 d-flex flex-column align-items-center">
@@ -251,18 +263,35 @@ function VolumeDetailPage() {
               <strong>Total Issues:</strong> {volume.issueCount}
             </p>
           </div>
-          <div className="d-flex flex-wrap align-items-center gap-2 mb-3 w-100" style={{ maxWidth: 300 }}>
+          <div className="responsive-action-buttons mb-3 w-100" style={{ maxWidth: 300, width: "100%" }}>
             {libraryLoading ? (
               <Spinner animation="border" size="sm" />
             ) : (
-              <Button variant={libraryEntry ? "warning" : "primary"} onClick={openModal} disabled={actionLoading}>
-                {actionLoading
-                  ? libraryEntry
-                    ? "Saving..."
-                    : "Adding..."
-                  : libraryEntry
-                  ? "Edit my library"
-                  : "Add to my library"}
+              <Button
+                variant={libraryEntry ? "warning" : "primary"}
+                onClick={openModal}
+                disabled={actionLoading}
+                className="btn-market btn-vault d-flex align-items-center justify-content-center gap-2"
+                style={{ height: 44, fontWeight: 600, fontSize: 17, flex: 1, minWidth: 0 }}
+              >
+                <img
+                  src={vaultChest}
+                  alt="Vault"
+                  style={{
+                    height: 30,
+                    width: "auto",
+                    objectFit: "contain",
+                  }}
+                />
+                <span className="button-icon-text">
+                  {actionLoading
+                    ? libraryEntry
+                      ? "Saving..."
+                      : "Adding..."
+                    : libraryEntry
+                    ? "Edit my Vault"
+                    : "Add to my Vault"}
+                </span>
               </Button>
             )}
 
@@ -270,22 +299,22 @@ function VolumeDetailPage() {
               href={amazonUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-market btn-amazon d-flex align-items-center gap-2"
-              style={{ minWidth: 100 }}
+              className="btn btn-market btn-amazon d-flex align-items-center justify-content-center gap-2"
+              style={{ height: 44, fontWeight: 600, fontSize: 17, flex: 1, minWidth: 0 }}
             >
               <img src={amazonImg} alt="Amazon" style={{ height: 30, width: "auto", objectFit: "contain" }} />
-              <span>Amazon</span>
+              <span className="button-icon-text">Amazon</span>
             </a>
 
             <a
               href={ebayUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-market btn-ebay d-flex align-items-center gap-2"
-              style={{ minWidth: 100 }}
+              className="btn btn-market btn-ebay d-flex align-items-center justify-content-center gap-2"
+              style={{ height: 44, fontWeight: 600, fontSize: 17, flex: 1, minWidth: 0 }}
             >
               <img src={ebayImg} alt="eBay" style={{ height: 30, width: "auto", objectFit: "contain" }} />
-              <span>eBay</span>
+              <span className="button-icon-text">eBay</span>
             </a>
           </div>
         </div>
@@ -305,7 +334,7 @@ function VolumeDetailPage() {
         <Form onSubmit={handleAddOrEdit}>
           <Modal.Header closeButton closeVariant="white" className="bg-dark text-white border-0">
             <Modal.Title className="text-white">
-              {libraryEntry ? "Edit your entry" : "Add volume to library"}
+              {libraryEntry ? "Edit your entry" : "Add volume to the Vault"}
             </Modal.Title>
           </Modal.Header>
           <Modal.Body className="bg-dark text-white">
@@ -361,7 +390,7 @@ function VolumeDetailPage() {
           <Modal.Footer className="bg-dark border-0">
             {libraryEntry && (
               <Button variant="danger" onClick={handleRemove} disabled={actionLoading}>
-                {actionLoading ? "Removing..." : "Remove from library"}
+                Remove from library
               </Button>
             )}
             <Button variant="secondary" onClick={closeModal}>
@@ -372,6 +401,22 @@ function VolumeDetailPage() {
             </Button>
           </Modal.Footer>
         </Form>
+      </Modal>
+
+      {/* MODALE DI CONFERMA ELIMINAZIONE */}
+      <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Remove from Library?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to remove this volume from your library?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={confirmDelete} disabled={actionLoading}>
+            {actionLoading ? "Removing..." : "Remove"}
+          </Button>
+        </Modal.Footer>
       </Modal>
     </div>
   );

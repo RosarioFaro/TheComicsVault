@@ -117,7 +117,7 @@ function VolumesPage() {
   };
 
   return (
-    <Container className="my-4 volume-detail-bg p-5" style={{ position: "relative" }}>
+    <Container className="my-4 volume-detail-bg p-5 custom-container" style={{ position: "relative" }}>
       <h2 className="mb-4 text-center">Volumes</h2>
       <Form.Control
         type="text"

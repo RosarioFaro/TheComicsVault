@@ -49,7 +49,7 @@ function AuthPage() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      navigate("/volumes");
+      navigate("/homepage");
     }
   }, [navigate]);
 
@@ -59,7 +59,7 @@ function AuthPage() {
 
     const result = await dispatch(login(loginForm));
     if (result?.success) {
-      navigate("/volumes");
+      navigate("/homepage");
     } else {
       setLoginError(true);
     }
@@ -85,7 +85,7 @@ function AuthPage() {
   };
 
   return (
-    <Container className="h-100 mt-5 volume-detail-bg">
+    <Container className="mt-5 volume-detail-bg custom-container">
       <div className="text-center mb-4">
         <h3>Welcome to TheComicVault!</h3>
         <p>Login to your account or register to start building your comic library.</p>
@@ -116,7 +116,6 @@ function AuthPage() {
               placeholder="Username"
               value={loginForm.username}
               onChange={(e) => setLoginForm({ ...loginForm, username: e.target.value })}
-              // rimosso className
             />
           </Form.Group>
 
@@ -128,7 +127,6 @@ function AuthPage() {
               placeholder="Password"
               value={loginForm.password}
               onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
-              // rimosso className
             />
           </Form.Group>
 
@@ -151,7 +149,6 @@ function AuthPage() {
               placeholder="Username"
               value={registerForm.username}
               onChange={(e) => setRegisterForm({ ...registerForm, username: e.target.value })}
-              // rimosso className
             />
           </Form.Group>
 
@@ -163,7 +160,6 @@ function AuthPage() {
               placeholder="Password"
               value={registerForm.password}
               onChange={(e) => setRegisterForm({ ...registerForm, password: e.target.value })}
-              // rimosso className
             />
           </Form.Group>
 
@@ -180,7 +176,6 @@ function AuthPage() {
                   confirmPassword: e.target.value,
                 })
               }
-              // rimosso className
             />
           </Form.Group>
 

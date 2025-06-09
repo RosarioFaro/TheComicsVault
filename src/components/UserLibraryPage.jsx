@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Modal, Button, Form, Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+import pencilIcon from "../assets/icons/pencil.png";
+import binIcon from "../assets/icons/recycle-bin.png";
+
 function UserLibraryPage() {
   const [library, setLibrary] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -15,6 +18,9 @@ function UserLibraryPage() {
     currentIssue: "",
   });
   const [saving, setSaving] = useState(false);
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteEntryId, setDeleteEntryId] = useState(null);
 
   useEffect(() => {
     fetchLibrary();
@@ -48,13 +54,19 @@ function UserLibraryPage() {
     setShowModal(true);
   };
 
-  const handleDelete = async (entryId) => {
+  const handleDelete = (entryId) => {
+    setDeleteEntryId(entryId);
+    setShowDeleteModal(true);
+  };
+
+  const confirmDelete = async () => {
     const token = localStorage.getItem("token");
-    if (!window.confirm("Sicuro di voler eliminare questa entry?")) return;
-    await fetch(`/api/user-library/${entryId}`, {
+    await fetch(`/api/user-library/${deleteEntryId}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });
+    setShowDeleteModal(false);
+    setDeleteEntryId(null);
     fetchLibrary();
   };
 
@@ -122,7 +134,7 @@ function UserLibraryPage() {
   if (error) return <p style={{ color: "red" }}>Error: {error}</p>;
 
   return (
-    <div style={{ maxWidth: 800, margin: "0 auto" }} className="volume-detail-bg mt-4 fixed-width-table">
+    <div className="volume-detail-bg mt-4 custom-container">
       <h2>Your Vault</h2>
       <div className="mb-3 d-flex gap-2 flex-wrap">
         <Button variant={statusFilter === "" ? "outline-light" : "light"} size="sm" onClick={() => setStatusFilter("")}>
@@ -167,7 +179,7 @@ function UserLibraryPage() {
       >
         <thead>
           <tr>
-            <th>Title</th>
+            <th className="td-title">Title</th>
             <th>Status</th>
             <th>Rating</th>
             <th>Issue</th>
@@ -177,7 +189,7 @@ function UserLibraryPage() {
         <tbody>
           {filteredAndSortedLibrary.map((entry) => (
             <tr key={entry.id}>
-              <td>
+              <td className="td-title">
                 <Link
                   to={`/volumes/${entry.comicVineId}`}
                   style={{ color: "#ffc107", fontWeight: 500, textDecoration: "none" }}
@@ -192,12 +204,40 @@ function UserLibraryPage() {
               <td>{entry.currentIssue ?? "-"}</td>
               <td>
                 <div className="d-flex gap-2">
-                  <Button size="sm" variant="primary" onClick={() => handleEdit(entry)}>
-                    Edit
-                  </Button>
-                  <Button size="sm" variant="danger" onClick={() => handleDelete(entry.id)}>
-                    Delete
-                  </Button>
+                  <img
+                    src={pencilIcon}
+                    alt="Edit"
+                    title="Edit"
+                    onClick={() => handleEdit(entry)}
+                    style={{
+                      width: 35,
+                      cursor: "pointer",
+                      background: "#ffc107",
+                      padding: 4,
+                      borderRadius: 8,
+                      border: "2px solid #ffc107",
+                      marginRight: 6,
+                      transition: "transform 0.13s",
+                    }}
+                    onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.12)")}
+                    onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
+                  />
+                  <img
+                    src={binIcon}
+                    alt="Delete"
+                    title="Delete"
+                    onClick={() => handleDelete(entry.id)}
+                    style={{
+                      width: 35,
+                      cursor: "pointer",
+                      background: "#dc3545",
+                      padding: 4,
+                      borderRadius: 8,
+                      transition: "transform 0.13s",
+                    }}
+                    onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.12)")}
+                    onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
+                  />
                 </div>
               </td>
             </tr>
@@ -272,6 +312,27 @@ function UserLibraryPage() {
             </Button>
           </Modal.Footer>
         </Form>
+      </Modal>
+
+      <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Comic?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this comic?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+            Cancel
+          </Button>
+          <Button
+            variant="danger"
+            onClick={async () => {
+              setShowDeleteModal(false);
+              await confirmDelete();
+            }}
+          >
+            Delete
+          </Button>
+        </Modal.Footer>
       </Modal>
     </div>
   );

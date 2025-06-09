@@ -3,6 +3,7 @@ import axios from "axios";
 export const LOGIN = "LOGIN";
 export const GET_VOLUMI = "GET_VOLUMI";
 export const GET_VOLUME = "GET_VOLUME";
+export const SET_RECOMMENDED_VOLUMI = "SET_RECOMMENDED_VOLUMI";
 
 export const login = (credentials) => async (dispatch) => {
   try {
@@ -112,4 +113,18 @@ export const fetchVolumeDetails = (id) => {
       console.error("Errore nel caricamento del volume:", error);
     }
   };
+};
+
+export const fetchRecommendedVolumes = (ids) => async (dispatch) => {
+  try {
+    const token = localStorage.getItem("token");
+    const res = await axios.get("/api/volumes/recommended", {
+      params: { ids },
+      headers: { Authorization: `Bearer ${token}` },
+      paramsSerializer: (params) => params.ids.map((id) => `ids=${id}`).join("&"),
+    });
+    dispatch({ type: "SET_RECOMMENDED_VOLUMI", payload: res.data });
+  } catch (error) {
+    console.error("Errore nel fetch dei volumi raccomandati:", error);
+  }
 };

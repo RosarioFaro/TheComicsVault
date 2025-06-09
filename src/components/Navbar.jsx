@@ -24,7 +24,7 @@ function Navbar() {
   return (
     <RBNavbar expand="lg" bg="warning" className="px-3 align-items-center">
       <Container fluid>
-        <Link className="navbar-brand" to="/">
+        <Link className="navbar-brand" to="/homepage">
           <img src={logo} alt="logo" style={{ height: "60px" }} />
         </Link>
         {token && (
