@@ -203,14 +203,14 @@ function UserLibraryPage() {
               <td>{entry.userScore ?? "-"}</td>
               <td>{entry.currentIssue ?? "-"}</td>
               <td>
-                <div className="d-flex gap-2">
+                <div className="d-flex gap-2 justify-content-end">
                   <img
                     src={pencilIcon}
                     alt="Edit"
                     title="Edit"
                     onClick={() => handleEdit(entry)}
                     style={{
-                      width: 35,
+                      width: 45,
                       cursor: "pointer",
                       background: "#ffc107",
                       padding: 4,
@@ -228,7 +228,7 @@ function UserLibraryPage() {
                     title="Delete"
                     onClick={() => handleDelete(entry.id)}
                     style={{
-                      width: 35,
+                      width: 45,
                       cursor: "pointer",
                       background: "#dc3545",
                       padding: 4,

@@ -217,9 +217,9 @@ figure {
 }
 
 .td-title {
-  width: 220px;
+  width: 600px;
   min-width: 100px;
-  max-width: 400px;
+  max-width: 550px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
