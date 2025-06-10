@@ -180,11 +180,11 @@ function AuthPage() {
           </Form.Group>
 
           <Form.Group>
-            <Form.Label>Scegli il tuo avatar</Form.Label>
+            <Form.Label>Chooes your avatar</Form.Label>
             <div className="d-flex flex-column align-items-center mb-3">
               <img
                 src={registerForm.avatar}
-                alt="Avatar selezionato"
+                alt="Selected avatar"
                 style={{
                   width: 54,
                   height: 54,
@@ -194,9 +194,9 @@ function AuthPage() {
                   objectFit: "cover",
                 }}
                 onClick={() => setShowAvatarModal(true)}
-                title="Clicca per cambiare avatar"
+                title="Click to change avatar"
               />
-              <small className="text-muted d-block text-center mt-1">Clicca sull’avatar per scegliere tra tutti!</small>
+              <small className="text-secondary d-block text-center mt-1">Click on the avatar to choose</small>
             </div>
           </Form.Group>
 
@@ -211,7 +211,7 @@ function AuthPage() {
 
       <Modal show={showAvatarModal} onHide={() => setShowAvatarModal(false)} centered>
         <Modal.Header closeButton>
-          <Modal.Title>Scegli il tuo Avatar</Modal.Title>
+          <Modal.Title>Choose your avatar</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="container">

@@ -262,6 +262,9 @@ function VolumeDetailPage() {
             <p className="mb-2">
               <strong>Total Issues:</strong> {volume.issueCount}
             </p>
+            <p className="mb-2">
+              <strong>Start Year:</strong> {volume.startYear}
+            </p>
           </div>
           <div className="responsive-action-buttons mb-3 w-100" style={{ maxWidth: 300, width: "100%" }}>
             {libraryLoading ? (
