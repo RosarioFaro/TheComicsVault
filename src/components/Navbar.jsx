@@ -1,8 +1,8 @@
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import logo from "../assets/logo.png";
 import { logout } from "../redux/action";
-import { Navbar as RBNavbar, Nav, Container, Dropdown, Image } from "react-bootstrap";
+import { Navbar as CustomNavbar, Nav, Container, Dropdown, Image } from "react-bootstrap";
 import { useState } from "react";
 import "../App.css";
 
@@ -22,17 +22,45 @@ function Navbar() {
   };
 
   return (
-    <RBNavbar expand="lg" bg="warning" className="px-3 align-items-center">
+    <CustomNavbar expand="lg" bg="warning" className="px-3 align-items-center sticky-top">
       <Container fluid>
         <Link className="navbar-brand" to="/homepage">
           <img src={logo} alt="logo" style={{ height: "60px" }} />
         </Link>
         {token && (
           <Nav className="d-none d-lg-flex align-items-center" style={{ marginLeft: 16 }}>
-            <Nav.Link as={Link} className="text-black" to="/volumes">
+            <Nav.Link
+              as={NavLink}
+              to="/volumes"
+              className="text-black"
+              style={({ isActive }) => ({
+                background: isActive ? "#fffde4" : "transparent", // Giallo chiaro custom
+                color: "#181818", // Testo scuro
+                borderRadius: 8,
+                fontWeight: isActive ? 700 : 500,
+                boxShadow: isActive ? "0 2px 10px #ffc10733" : "none",
+                border: isActive ? "2px solid #ffc107" : "2px solid transparent",
+                padding: "6px 18px",
+                transition: "all 0.15s",
+              })}
+            >
               Volumes
             </Nav.Link>
-            <Nav.Link as={Link} className="text-black" to="/library">
+            <Nav.Link
+              as={NavLink}
+              to="/library"
+              className="text-black"
+              style={({ isActive }) => ({
+                background: isActive ? "#fffde4" : "transparent",
+                color: "#181818",
+                borderRadius: 8,
+                fontWeight: isActive ? 700 : 500,
+                boxShadow: isActive ? "0 2px 10px #ffc10733" : "none",
+                border: isActive ? "2px solid #ffc107" : "2px solid transparent",
+                padding: "6px 18px",
+                transition: "all 0.15s",
+              })}
+            >
               Vault
             </Nav.Link>
           </Nav>
@@ -157,7 +185,7 @@ function Navbar() {
           </div>
         )}
       </Container>
-    </RBNavbar>
+    </CustomNavbar>
   );
 }
 
