@@ -180,7 +180,7 @@ function AuthPage() {
           </Form.Group>
 
           <Form.Group>
-            <Form.Label>Chooes your avatar</Form.Label>
+            <Form.Label>Choose your avatar</Form.Label>
             <div className="d-flex flex-column align-items-center mb-3">
               <img
                 src={registerForm.avatar}
